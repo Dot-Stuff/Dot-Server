@@ -1,15 +1,18 @@
-/**
- * IMPORTANT: 
- * ---------
- * Do not manually edit this file if you'd like to use Colyseus Arena
- * 
- * If you're self-hosting (without Arena), you can manually instantiate a
- * Colyseus Server as documented here: 👉 https://docs.colyseus.io/server/api/#constructor-options 
- */
-import { listen } from "@colyseus/arena";
+import { Server } from "colyseus";
+import { createServer } from "http";
+import express from "express";
 
-// Import arena config
-import arenaConfig from "./arena.config";
+import { BattleRoom } from "./rooms/BattleRoom";
 
-// Create and listen on 2567 (or PORT environment variable.)
-listen(arenaConfig);
+const port = Number(2567);
+
+const app = express();
+app.use(express.json());
+
+const gameServer = new Server({
+  server: createServer(app)
+});
+
+gameServer.define("battle", BattleRoom, { song: "bopeebo" });
+
+gameServer.listen(port);
