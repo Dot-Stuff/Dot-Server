@@ -1,5 +1,7 @@
 import Arena from "@colyseus/arena";
 import { monitor } from "@colyseus/monitor";
+import express from "express";
+import serveIndex from 'serve-index';
 
 /**
  * Import your Room files
@@ -7,13 +9,13 @@ import { monitor } from "@colyseus/monitor";
 import { BattleRoom } from "./rooms/BattleRoom";
 
 export default Arena({
-    getId: () => "Your Colyseus App",
+    getId: () => "Dot-Server",
 
     initializeGameServer: (gameServer) => {
         /**
          * Define your room handlers:
          */
-        gameServer.define('my_room', BattleRoom);
+        gameServer.define('battle', BattleRoom);
 
     },
 
@@ -21,6 +23,8 @@ export default Arena({
         /**
          * Bind your custom express routes here:
          */
+        app.use('/post', express.static('html'), serveIndex('html', { 'icons': true }))
+
         app.get("/", (req, res) => {
             res.send("It's time to kick ass and chew bubblegum!");
         });

@@ -9,11 +9,8 @@ export class BattleRoom extends Room<BattleState> {
     console.log(options.song);
 
     this.onMessage("type", (client, message) => {
-      //
-      // handle "type" message
-      //
+      console.log("Message", message);
     });
-
   }
 
   onJoin(client: Client, options: any) {
