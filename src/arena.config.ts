@@ -15,7 +15,8 @@ export default Arena({
         /**
          * Define your room handlers:
          */
-        gameServer.define('battle', BattleRoom);
+        gameServer.define('battle', BattleRoom)
+            .filterBy(['password']);
 
     },
 
